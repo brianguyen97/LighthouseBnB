@@ -1,3 +1,4 @@
+// Requirements
 const properties = require("./json/properties.json");
 const users = require("./json/users.json");
 
@@ -12,11 +13,12 @@ const pool = new Pool({
 
 /// Users
 
-/**
- * Get a single user from the database given their email.
- * @param {String} email The email of the user.
- * @return {Promise<{}>} A promise to the user.
+/*
+ Accepts an email as a string and returns a promise.
+ If the promise resolves, it will resolve with the user object with the given email address,
+ otherwise it will return null.
  */
+
 const getUserWithEmail = function (email) {
   const queryString = `
       SELECT *
@@ -37,12 +39,10 @@ const getUserWithEmail = function (email) {
 
 exports.getUserWithEmail = getUserWithEmail;
 
-// getUserWithEmail("tristanjacobs@gmail.com");
-
-/**
- * Get a single user from the database given their id.
- * @param {string} id The id of the user.
- * @return {Promise<{}>} A promise to the user.
+/*
+ Accepts an id as a string and returns a promise.
+ If the promise resolves, it will resolve with the user object with the given id,
+ otherwise it will return null.
  */
 const getUserWithId = function (id) {
   const queryString = `
@@ -59,11 +59,12 @@ const getUserWithId = function (id) {
 };
 exports.getUserWithId = getUserWithId;
 
-/**
- * Add a new user to the database.
- * @param {{name: string, password: string, email: string}} user
- * @return {Promise<{}>} A promise to the user.
- */
+/*
+Accepts a user object that contains a name, email and password property,
+the function will insert a new user into or database. It also returns
+a promise that resolves with the new user object.
+*/
+
 const addUser = function (user) {
   const { name, email, password } = user;
   return pool
@@ -112,11 +113,10 @@ exports.getAllReservations = getAllReservations;
 
 /// Properties
 
-/**
- * Get all properties.
- * @param {{}} options An object containing query options.
- * @param {*} limit The number of results to return.
- * @return {Promise<[{}]>}  A promise to the properties.
+/*
+ Accepts an options object that contains a city, owner_id, minimum_price_per_night,
+ maximum_price_per_night, and minimum_rating and a limit (default 10).
+ This function builds a query string that will filter our search results based on these options.
  */
 
 const getAllProperties = function (options, limit = 10) {
@@ -174,10 +174,8 @@ const getAllProperties = function (options, limit = 10) {
 
 exports.getAllProperties = getAllProperties;
 
-/**
- * Add a property to the database
- * @param {{}} property An object containing all of the property details.
- * @return {Promise<{}>} A promise to the property.
+/* This function will receive a property object and will return
+ a promise to the saved version of the property.<{}>} A promise to the property.
  */
 const addProperty = function (property) {
   const {
